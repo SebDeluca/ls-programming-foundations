@@ -7,11 +7,9 @@ end
 prompt('This is your personal mortgage calculator')
 
 loop do
-
   prompt('What is your total loan amounts? Please use numbers only: ')
   loan_total = ''
   loop do
-
     loan_total = gets.chomp
 
     if loan_total.empty? || loan_total.to_f < 1
@@ -24,7 +22,9 @@ loop do
   prompt('What is your APR? Ex. For 5%, type in .05: ')
   apr = gets.chomp.to_f
 
-  prompt('Finally, what is your loan duration, in years? Ex. 30 years, type 30: ')
+  prompt('Finally, what is your loan duration, in years?
+  Ex. 30 years, type 30: ')
+
   duration_in_years = gets.chomp.to_i
 
   # This is where we perform calculations
@@ -39,5 +39,4 @@ loop do
   prompt('Would you like to calculate another mortgage? Type Y if so:')
   answer = gets.chomp
   break unless answer.downcase.start_with?('y')
-
 end
