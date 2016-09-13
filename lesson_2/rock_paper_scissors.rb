@@ -20,7 +20,7 @@ def display_result(player, computer)
     # prompt("It's a tie!")
     return "It's a tie"
   end
-end
+end  
 
 loop do
   choice = ''
@@ -40,6 +40,8 @@ loop do
   prompt("You chose #{choice}. Computer chose #{computer_choice}")
 
   puts display_result(choice, computer_choice)
+
+  win_count()
 
   prompt("Do you want to play again? Type Y")
   answer = gets.chomp
