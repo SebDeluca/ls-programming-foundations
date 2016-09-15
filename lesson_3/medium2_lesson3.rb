@@ -34,4 +34,4 @@ new_answer = mess_with_it(answer)
 
 p answer - 8
 
-puts rps(rps(rps("rock", "paper"), "rock", "rock")
+puts rps("paper", "rock")
