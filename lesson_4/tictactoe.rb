@@ -61,8 +61,37 @@ def player_places_piece!(brd)
   brd[square] = PLAYER_MARKER
 end
 
+def find_at_risk_square(line, brd)
+  if brd.values_at(*line).count(PLAYER_MARKER) == 2
+    brd.select{ |k,v| line.include?(k) && v == INITIAL_MARKER }.keys.first
+  else
+    nil
+  end
+end
+
+def find_winning_square(line, brd)
+  if brd.values_at(*line).count(COMPUTER_MARKER) == 2
+    brd.select{ |k,v| line.include?(k) && v == INITIAL_MARKER }.keys.first
+  else
+    nil
+  end
+end
+
 def computer_places_piece!(brd)
-  square = empty_squares(brd).sample
+  square = nil
+
+  WINNING_LINES.each do |line|
+    if square = find_winning_square(line, brd)
+      break if square
+    else square = find_at_risk_square(line, brd)
+      break if square
+    end
+  end
+
+  if !square
+    square = empty_squares(brd).sample
+  end
+
   brd[square] = COMPUTER_MARKER
 end
 
@@ -85,6 +114,9 @@ def detect_winner(brd)
   nil
 end
 
+player_wins = 0
+computer_wins = 0
+
 # PROGRAM BEGINS
 
 loop do
@@ -104,8 +136,26 @@ loop do
 
   if someone_won?(board)
     prompt "#{detect_winner(board)} won!"
+    if detect_winner(board) == 'Player'
+      player_wins += 1
+      prompt "You have won #{player_wins} game(s)"
+    else detect_winner(board) == 'Computer'
+      computer_wins += 1
+      prompt "Computer has won #{computer_wins} game(s)"
+    end
+
   else
     prompt "It's a tie!"
+  end
+
+  if player_wins >= 5
+    prompt "You are the ultimate champion!"
+    break
+  elsif computer_wins >= 5
+    prompt "Computer is the ultimate champion!"
+    break
+  else
+    nil
   end
 
   prompt "Play again? (y or n)"
